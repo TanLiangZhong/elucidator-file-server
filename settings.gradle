@@ -1,0 +1,4 @@
+rootProject.name = 'elucidator-file-server'
+include 'fs-common'
+include 'fs-elucidator'
+

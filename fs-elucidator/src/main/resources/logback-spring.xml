@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+
+	<springProperty scop="context" name="logLevel" source="logging.level.root" defaultValue="INFO"/>
+	<springProperty scop="context" name="fileName" source="logging.file.name" defaultValue=""/>
+<!--	<springProperty scop="context" name="logPath" source="logging.file.path" defaultValue="" />-->
+	<!-- 防止出现logPath_IS_UNDEFINED 问题 -->
+	<property name="logPath" value="${LOG_PATH:-.}"/>
+	<!-- 彩色日志 -->
+	<!-- 彩色日志依赖的渲染类 -->
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<!-- 彩色日志格式 -->
+	<property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+
+
+	<!--控制台输出appender-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!--设置输出格式-->
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+			<pattern>
+				<![CDATA[
+					%-20( %boldMagenta(%d{yyyy-MM-dd HH:mm:ss.SSS}) %red([%thread]) ) %cyan(%-5level) %highlight(%logger{80}[%L]) - %msg%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}
+			    ]]>
+			</pattern>
+			<!--设置编码-->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<file>${logPath}/${fileName}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logPath}/${fileName}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>64 MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<append>true</append>
+		<prudent>false</prudent>
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+			<pattern>
+				<![CDATA[
+					%-20(%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]) %-5level %logger{80}[%L] - %msg%n
+			    ]]>
+			</pattern>
+			<!--设置编码-->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="file-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		<file>${logPath}/${fileName}-error.log</file>
+		<param name="append" value="true" />
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${logPath}/${fileName}-error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<!-- 单个日志文件大小：500MB，超过后拆分日志 -->
+			<maxFileSize>100MB</maxFileSize>
+			<!-- 日志存储周期：30天的日志周期-->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+			<pattern>
+				<![CDATA[
+					%-20(%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]) %-5level %logger{80}[%L] - %msg%n
+			    ]]>
+			</pattern>
+			<!--设置编码-->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	<root>
+		<level value = "${logLevel}"/>
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="file-error" />
+	</root>
+</configuration>

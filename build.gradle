@@ -1,0 +1,64 @@
+group 'com.sword'
+version '0.0.1-SNAPSHOT'
+
+
+//sourceCompatibility = '11'
+//targetCompatibility = '11'
+
+buildscript {
+
+    ext {
+        springBootVersion = '2.4.1'
+        springGradleVersion = '1.0.10.RELEASE'
+        shadowVersion = '6.1.0'
+        swaggerVersion = '3.0.0'
+    }
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://repo.spring.io/libs-release' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:$springGradleVersion"
+        classpath "com.github.jengelman.gradle.plugins:shadow:$shadowVersion"
+    }
+}
+
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+
+    group 'com.sword'
+    version '0.0.1-SNAPSHOT'
+
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://repo.spring.io/libs-release' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        jcenter()
+        mavenCentral()
+    }
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

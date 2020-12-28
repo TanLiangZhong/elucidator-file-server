@@ -1,0 +1,61 @@
+server:
+  port: 8088
+#  servlet:
+#    context-path: fs-elucidator
+
+spring:
+  application:
+    name: fs-elucidator
+
+  data:
+    mongodb:
+      uri: mongodb://admin:123456@localhost:27017/fs-elucidator?authSource=admin
+      gridfs:
+        bucket: elucidator
+        database: fs-elucidator
+
+  servlet:
+    # limit upload file size
+    multipart:
+      max-file-size: 128GB
+      max-request-size: 1024GB
+
+  jackson:
+    default-property-inclusion: non_null #忽略空
+    date-format: yyyy-MM-dd HH:mm:ss # 全局设置@JsonFormat的格式pattern
+    time-zone: GMT+8  # 设置全局时区
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+    logfile:
+      external-file: /home/sword/logs/${spring.application.name}/${spring.application.name}.log
+
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: /home/sword/logs/${spring.application.name}
+    name: ${spring.application.name}
+  level:
+    root: info
+    com.sword: debug
+    org.springframework: info
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
+    org.springframework.data.mongodb: debug
+
+base:
+  swagger:
+    enabled: true
+    title: 文件服务器
+    description: 文件服务器接口
+    version: 1.0.0
+    contact:
+      name: liangzhong.tan
+      email: liangzhong.tan@outlook.com
+  fs:
+    base-preview-url: http://localhost:8088
