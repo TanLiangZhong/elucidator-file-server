@@ -1,12 +1,11 @@
 package com.sword.elucidator.utils;
 
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 /**
  * Servlet 相关操作
@@ -17,20 +16,11 @@ import javax.servlet.http.HttpSession;
 public class ServletUtils {
 
     public static HttpServletRequest getRequest() {
-        return getRequestAttributes().getRequest();
+        return Optional.ofNullable(RequestContextHolder.getRequestAttributes()).map(it -> ((ServletRequestAttributes) it).getRequest()).orElse(null);
     }
 
     public static HttpServletResponse getResponse() {
-        return getRequestAttributes().getResponse();
-    }
-
-    public static HttpSession getSession() {
-        return getRequest().getSession();
-    }
-
-    public static ServletRequestAttributes getRequestAttributes() {
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-        return (ServletRequestAttributes) attributes;
+        return Optional.ofNullable(RequestContextHolder.getRequestAttributes()).map(it -> ((ServletRequestAttributes) it).getResponse()).orElse(null);
     }
 
 }
