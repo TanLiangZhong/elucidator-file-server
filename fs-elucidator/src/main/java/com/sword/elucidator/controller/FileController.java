@@ -40,7 +40,7 @@ public class FileController {
 
     @ApiOperation("文件上传")
     @PostMapping("upload")
-    public ApiResult<FsFileVo> upload(@RequestParam("files") MultipartFile file) {
+    public ApiResult<FsFileVo> upload(@RequestParam("file") MultipartFile file) {
         return ApiResult.ok(service.upload(file));
     }
 
