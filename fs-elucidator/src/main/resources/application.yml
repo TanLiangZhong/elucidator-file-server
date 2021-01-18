@@ -17,7 +17,7 @@ spring:
   servlet:
     # limit upload file size
     multipart:
-      max-file-size: 128GB
+      max-file-size: 16GB
       max-request-size: 1024GB
 
   jackson:

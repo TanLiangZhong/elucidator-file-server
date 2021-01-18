@@ -1,13 +1,13 @@
 {
   "name": "lz-elucidator-sdk",
   "version": "0.0.1",
-  "description": "",
+  "description": "文件上传SDK",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "liangzhong.tan@outlook.com",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1"
