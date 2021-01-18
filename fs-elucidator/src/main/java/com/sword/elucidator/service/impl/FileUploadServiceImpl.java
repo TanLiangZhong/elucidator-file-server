@@ -80,7 +80,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public FileUploadVo uploadPart(UploadPartBo part) {
-        log.info(" --part--  {}", part);
+        log.info("uploadPart ===>>> part: {}, chunkSize: {}, ContentType: {}", part, part.getFile().getSize(), part.getFile().getContentType());
         try {
             MultipartFile file = part.getFile();
             if (StringUtils.hasText(part.getFileId())) {

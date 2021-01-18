@@ -35,4 +35,16 @@ public class UploadPartBo {
 
     @ApiModelProperty(value = "文件", required = true)
     private MultipartFile file;
+
+    @Override
+    public String toString() {
+        return "UploadPartBo{" +
+                "fileId='" + fileId + '\'' +
+                ", name='" + name + '\'' +
+                ", size=" + size +
+                ", suffix='" + suffix + '\'' +
+                ", chunkSize=" + chunkSize +
+                ", chunkIndex=" + chunkIndex +
+                '}';
+    }
 }
