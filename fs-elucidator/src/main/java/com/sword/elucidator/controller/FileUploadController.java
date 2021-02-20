@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * TODO
+ * 文件上传
  *
  * @author Tan
  * @version 1.0 2021/1/17
@@ -36,7 +36,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @Api(tags = "文件上传")
-@RequestMapping("v2")
+@RequestMapping
 @RequiredArgsConstructor
 public class FileUploadController {
 
