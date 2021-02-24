@@ -57,9 +57,9 @@ public class FileUploadServiceImpl implements FileUploadService {
             Document metadata = new Document()
                     .append(BaseConstants.FILE_METADATA_CONTENT_TYPE, file.getContentType())
                     .append(BaseConstants.FILE_METADATA_SUFFIX, fileName.substring(fileName.lastIndexOf(".")));
-            log.info("FileName: {}, size: {}", fileName, file.getSize());
+            log.info("name: {}, size: {}", fileName, file.getSize());
             ObjectId objectId = gridFsTemplate.store(file.getInputStream(), fileName, metadata);
-            log.info("上传成功 {}, objectId: {}", fileName, objectId.toHexString());
+            log.info("upload success {}, objectId: {}", fileName, objectId.toHexString());
             return FileUploadVo.builder()
                     .fileId(objectId.toHexString())
                     .name(fileName)

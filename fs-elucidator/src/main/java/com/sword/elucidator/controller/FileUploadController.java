@@ -66,7 +66,8 @@ public class FileUploadController {
 
     @ApiOperation("文件预览")
     @GetMapping("preview/{id}.*")
-    public void previewV2(@PathVariable String id, HttpServletResponse response) {
+    public void preview(@PathVariable String id, HttpServletResponse response) {
+        log.info("file preview: {}", id);
         try (OutputStream out = response.getOutputStream()) {
             GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
             if (gridFSFile != null) {
@@ -78,6 +79,7 @@ public class FileUploadController {
                 response.addHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(gridFSFile.getLength()));
 
                 gridFSBucket.downloadToStream(gridFSFile.getObjectId(), out);
+                log.info("file preview end");
             } else {
                 out.write(JSON.toJSONString(ApiResult.error("file does not exist!")).getBytes(StandardCharsets.UTF_8));
             }
