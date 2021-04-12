@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: elucidator-file-server-app
-          image: registry.cn-zhangjiakou.aliyuncs.com/liangzhong/elucidator-file-server:0.0.1-SNAPSHOT
+          image: registry.cn-zhangjiakou.aliyuncs.com/liangzhong/elucidator-file-server:2021-04-12-12-39-12
           ports:
             - containerPort: 8088
           env:
