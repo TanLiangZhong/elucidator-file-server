@@ -58,4 +58,4 @@ base:
       email: liangzhong.tan@outlook.com
   fs:
 #    base-preview-url: http://localhost:8088
-    base-preview-url: http://msp.jt-info.com.cn:8081/fs
+    base-preview-url: http://smp.jt-info.com.cn:8081/fs
