@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elucidator-file-server-loadbalancer
+  namespace: safety
+spec:
+  selector:
+    app: elucidator-file-server-app
+  ports:
+    - protocol: TCP
+      port: 8088
+      targetPort: 8088
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: elucidator-file-server-app
+  namespace: safety
+  labels:
+    app: elucidator-file-server-app
+spec:
+  selector:
+    matchLabels:
+      app: elucidator-file-server-app
+  template:
+    metadata:
+      labels:
+        app: elucidator-file-server-app
+    spec:
+      containers:
+        - name: elucidator-file-server-app
+          image: registry.cn-zhangjiakou.aliyuncs.com/liangzhong/elucidator-file-server:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 8088
+          env:
+            - name: TZ
+              value: Asia/Shanghai

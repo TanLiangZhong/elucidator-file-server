@@ -45,13 +45,13 @@ class ElucidatorApplicationTests {
     @Resource
     private MongoProperties properties;
 
-    @Test
-    void contextLoads() throws IOException {
-        File file = new File("C:\\Users\\liang\\Pictures\\壁纸_1\\lou-ll-maid-58-small.jpg");
-        FileInputStream inputStream = new FileInputStream(file);
-        MockMultipartFile file1 = new MockMultipartFile(file.getName(), inputStream);
-        upload(file1);
-    }
+//    @Test
+//    void contextLoads() throws IOException {
+//        File file = new File("C:\\Users\\liang\\Pictures\\壁纸_1\\lou-ll-maid-58-small.jpg");
+//        FileInputStream inputStream = new FileInputStream(file);
+//        MockMultipartFile file1 = new MockMultipartFile(file.getName(), inputStream);
+//        upload(file1);
+//    }
 
     public void upload(MultipartFile file) throws IOException {
 
