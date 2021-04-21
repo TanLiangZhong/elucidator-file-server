@@ -22,13 +22,13 @@ import java.util.List;
 public class PageVo<T> implements Serializable {
 
     @ApiModelProperty("当前页")
-    private Long current;
+    private Integer current;
 
     @ApiModelProperty("页码大小")
-    private Long size;
+    private Integer size;
 
     @ApiModelProperty("总页数")
-    private Long totalPage;
+    private Integer totalPage;
 
     @ApiModelProperty("总数")
     private Long total;
@@ -36,14 +36,14 @@ public class PageVo<T> implements Serializable {
     @ApiModelProperty("结果集合")
     private List<T> list;
 
-    public PageVo(Long current, Long size, Long total, List<T> list) {
+    public PageVo(Integer current, Integer size, Long total, List<T> list) {
         this.current = current;
         this.size = size;
         this.total = total;
         this.list = list;
     }
 
-    public PageVo(Long current, Long size, Long total) {
+    public PageVo(Integer current, Integer size, Long total) {
         this.current = current;
         this.size = size;
         this.total = total;

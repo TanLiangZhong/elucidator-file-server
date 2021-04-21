@@ -5,8 +5,10 @@ import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.sword.common.constant.BaseConstants;
 import com.sword.common.domain.ApiResult;
+import com.sword.common.domain.PageVo;
+import com.sword.elucidator.domain.bo.FileSearchBo;
 import com.sword.elucidator.domain.bo.UploadPartBo;
-import com.sword.elucidator.domain.vo.FileUploadVo;
+import com.sword.elucidator.domain.document.FileDocument;
 import com.sword.elucidator.service.FileUploadService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,20 +48,20 @@ public class FileUploadController {
 
     @ApiOperation("文件上传")
     @PostMapping("upload")
-    public ApiResult<FileUploadVo> upload(@RequestParam("file") MultipartFile file) {
+    public ApiResult<FileDocument> upload(@RequestParam("file") MultipartFile file) {
         return ApiResult.ok(service.upload(file));
     }
 
     @ApiOperation("批量上传文件")
     @PostMapping("batch/upload")
-    public ApiResult<List<FileUploadVo>> batchUpload(@RequestParam("files") MultipartFile[] file) {
+    public ApiResult<List<FileDocument>> batchUpload(@RequestParam("files") MultipartFile[] file) {
         return ApiResult.ok(service.batchUpload(file));
     }
 
     @ApiOperation("分片上传")
     @PostMapping("uploadPart")
-    public ApiResult<FileUploadVo> uploadPart(UploadPartBo file) {
-        FileUploadVo vo = service.uploadPart(file);
+    public ApiResult<FileDocument> uploadPart(UploadPartBo file) {
+        FileDocument vo = service.uploadPart(file);
         log.info("  uploadPart {}", vo);
         return ApiResult.ok(vo);
     }
@@ -89,5 +91,9 @@ public class FileUploadController {
         }
     }
 
-
+    @ApiOperation("文件预览")
+    @GetMapping("findPage")
+    private ApiResult<PageVo<FileDocument>> findPage(FileSearchBo bo) {
+        return ApiResult.ok(service.findPage(bo));
+    }
 }

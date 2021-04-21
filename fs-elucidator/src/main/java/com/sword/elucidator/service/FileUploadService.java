@@ -1,7 +1,9 @@
 package com.sword.elucidator.service;
 
+import com.sword.common.domain.PageVo;
+import com.sword.elucidator.domain.bo.FileSearchBo;
 import com.sword.elucidator.domain.bo.UploadPartBo;
-import com.sword.elucidator.domain.vo.FileUploadVo;
+import com.sword.elucidator.domain.document.FileDocument;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -19,25 +21,31 @@ public interface FileUploadService {
      * 上传文件
      *
      * @param file file
-     * @return {@link FileUploadVo}
+     * @return {@link FileDocument}
      */
-    FileUploadVo upload(MultipartFile file);
+    FileDocument upload(MultipartFile file);
 
     /**
      * 批量上传
      *
      * @param file file
-     * @return {@link FileUploadVo}
+     * @return {@link FileDocument}
      */
-    List<FileUploadVo> batchUpload(MultipartFile[] file);
+    List<FileDocument> batchUpload(MultipartFile[] file);
 
     /**
      * 分片上传
      *
      * @param file 文件对象
-     * @return {@link FileUploadVo}
+     * @return {@link FileDocument}
      */
-    FileUploadVo uploadPart(UploadPartBo file);
+    FileDocument uploadPart(UploadPartBo file);
 
-
+    /**
+     * 分页查询
+     *
+     * @param bo 查询条件
+     * @return {@link FileDocument}
+     */
+    PageVo<FileDocument> findPage(FileSearchBo bo);
 }

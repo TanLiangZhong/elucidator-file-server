@@ -19,12 +19,12 @@ public class PageBo {
      * 当前页
      */
     @ApiModelProperty(value = "当前页", required = true, example = "1")
-    protected Long current = 1L;
+    protected Integer current = 1;
     /**
      * 每页显示条数，默认 10
      */
     @ApiModelProperty(value = "页码大小", required = true, example = "10")
-    protected Long size = 10L;
+    protected Integer size = 10;
 
     @ApiModelProperty("排序 key:字段名，value:DESC/ASC ")
     protected HashMap<String, String> sorter;

@@ -8,7 +8,7 @@ version '0.0.1-SNAPSHOT'
 buildscript {
 
     ext {
-        springBootVersion = '2.4.1'
+        springBootVersion = '2.4.5'
         springGradleVersion = '1.0.10.RELEASE'
         shadowVersion = '6.1.0'
         swaggerVersion = '3.0.0'
