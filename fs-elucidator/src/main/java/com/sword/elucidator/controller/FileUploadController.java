@@ -74,6 +74,7 @@ public class FileUploadController {
                 Document document = Optional.ofNullable(gridFSFile.getMetadata()).orElse(new Document());
 
                 response.setCharacterEncoding("UTF-8");
+                response.addHeader(HttpHeaders.ACCEPT_RANGES, "bytes");
                 response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + URLEncoder.encode(gridFSFile.getFilename(), StandardCharsets.UTF_8));
                 response.addHeader(HttpHeaders.CONTENT_TYPE, Optional.ofNullable(document.getString(BaseConstants.FILE_METADATA_CONTENT_TYPE)).orElse("image/jpeg"));
                 response.addHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(gridFSFile.getLength()));
