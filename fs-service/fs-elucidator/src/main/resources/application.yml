@@ -1,7 +1,5 @@
 server:
   port: 8088
-#  servlet:
-#    context-path: fs-elucidator
 
 spring:
   application:
@@ -9,7 +7,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://admin:123456@localhost:27017/fs-elucidator?authSource=admin
+      uri: mongodb://root:123456@101.132.126.97:27017/fs-elucidator?authSource=admin
       gridfs:
         bucket: elucidator
         database: fs-elucidator

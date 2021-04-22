@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import com.sword.common.constant.BaseConstants;
 import com.sword.common.domain.PageVo;
 import com.sword.elucidator.conf.FsProperties;
 import com.sword.elucidator.domain.bo.FileSearchBo;
@@ -60,10 +61,12 @@ public class FileUploadServiceImpl implements FileUploadService {
     public FileDocument upload(MultipartFile file) {
         try {
             String fileName = Optional.ofNullable(file.getOriginalFilename()).orElse(file.getName());
+            String contentType = file.getContentType();
+            String suffix = fileName.substring(fileName.lastIndexOf("."));
+            Document metadata = new Document()
+                    .append(BaseConstants.FILE_METADATA_CONTENT_TYPE, contentType)
+                    .append(BaseConstants.FILE_METADATA_SUFFIX, suffix);
 
-            FileMetadata metadata = new FileMetadata();
-            metadata.setContentType(file.getContentType());
-            metadata.setSuffix(fileName.substring(fileName.lastIndexOf(".")));
             log.info("name: {}, size: {}", fileName, file.getSize());
             ObjectId objectId = gridFsTemplate.store(file.getInputStream(), fileName, metadata);
             log.info("upload success {}, objectId: {}", fileName, objectId.toHexString());
@@ -72,9 +75,10 @@ public class FileUploadServiceImpl implements FileUploadService {
                     .fileId(objectId.toHexString())
                     .name(fileName)
                     .size(file.getSize())
-                    .contentType(metadata.getContentType())
-                    .suffix(metadata.getSuffix())
-                    .previewUrl(fsProperties.getBasePreviewUrl() + "/preview/" + objectId.toHexString() + metadata.getSuffix())
+                    .contentType(contentType)
+                    .suffix(suffix)
+                    .previewUrl(fsProperties.getBasePreviewUrl() + "/preview/" + objectId.toHexString() + suffix)
+                    .gmtCreated(new Date())
                     .build();
             fileRepository.save(fileDocument);
             return fileDocument;
@@ -104,9 +108,11 @@ public class FileUploadServiceImpl implements FileUploadService {
                 BsonValue fileId = new BsonObjectId(objectId);
 
                 String fileName = part.getName();
-                FileMetadata metadata = new FileMetadata();
-                metadata.setContentType(file.getContentType());
-                metadata.setSuffix(fileName.substring(fileName.lastIndexOf(".")));
+                String contentType = file.getContentType();
+                String suffix = fileName.substring(fileName.lastIndexOf("."));
+                Document metadata = new Document()
+                        .append(BaseConstants.FILE_METADATA_CONTENT_TYPE, contentType)
+                        .append(BaseConstants.FILE_METADATA_SUFFIX, suffix);
                 log.info(" --metadata--  {}", metadata);
 
                 MongoCollection<GridFSFile> filesCollection = getFilesCollection(mongoClient.getDatabase(mongoProperties.getGridfs().getDatabase()), mongoProperties.getGridfs().getBucket());
@@ -118,9 +124,10 @@ public class FileUploadServiceImpl implements FileUploadService {
                         .fileId(objectId.toHexString())
                         .name(fileName)
                         .size(file.getSize())
-                        .contentType(metadata.getContentType())
-                        .suffix(metadata.getSuffix())
-                        .previewUrl(fsProperties.getBasePreviewUrl() + "/preview/" + objectId.toHexString() + metadata.getSuffix())
+                        .contentType(contentType)
+                        .suffix(suffix)
+                        .previewUrl(fsProperties.getBasePreviewUrl() + "/preview/" + objectId.toHexString() + suffix)
+                        .gmtCreated(new Date())
                         .build();
                 fileRepository.save(fileDocument);
                 return fileDocument;

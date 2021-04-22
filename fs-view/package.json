@@ -21,10 +21,15 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
+    "@ant-design/pro-descriptions": "^1.0.1",
     "@ant-design/pro-layout": "^6.5.0",
+    "@ant-design/pro-table": "^2.0.1",
     "@umijs/preset-react": "1.x",
     "antd": "^4.0.0",
-    "umi": "^3.4.11"
+    "dva": "^2.4.0",
+    "moment": "^2.22.2",
+    "umi": "^3.4.11",
+    "umi-request": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
